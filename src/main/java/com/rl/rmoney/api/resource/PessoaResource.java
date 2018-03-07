@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import com.rl.rmoney.api.event.RecursoCriadoEvent;
 import com.rl.rmoney.api.model.Pessoa;
 import com.rl.rmoney.api.repository.PessoaRepository;
+import com.rl.rmoney.api.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,9 @@ public class PessoaResource {
 
     @Autowired
     private ApplicationEventPublisher publisher;
+
+    @Autowired
+    private PessoaService pessoaService;
 
     @GetMapping
     public List<Pessoa> listar() {
@@ -53,6 +57,12 @@ public class PessoaResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover(@PathVariable Long codigo) {
         pessoaRepository.delete(codigo);
+    }
+
+    @PutMapping("/{codigo}")
+    public ResponseEntity<Pessoa> atualizar(@PathVariable Long codigo, @Valid @RequestBody Pessoa pessoa) {
+        Pessoa pessoaSalva = pessoaService.atualizar(codigo, pessoa);
+        return ResponseEntity.ok(pessoaSalva);
     }
 
 }
