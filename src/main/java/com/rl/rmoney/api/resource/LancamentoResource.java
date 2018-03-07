@@ -4,6 +4,7 @@ import com.rl.rmoney.api.event.RecursoCriadoEvent;
 import com.rl.rmoney.api.exceptionhandler.RmoneyExceptionHandler;
 import com.rl.rmoney.api.model.Lancamento;
 import com.rl.rmoney.api.repository.LancamentoRepository;
+import com.rl.rmoney.api.repository.filter.LancamentoFilter;
 import com.rl.rmoney.api.service.LancamentoService;
 import com.rl.rmoney.api.service.exception.PessoaInexistenteOuInativaException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -44,8 +45,8 @@ public class LancamentoResource {
     private MessageSource messageSource;
 
     @GetMapping
-    public List<Lancamento> listar() {
-        return lancamentoRepository.findAll();
+    public List<Lancamento> pesquisar(LancamentoFilter lancamentoFilter) {
+        return lancamentoRepository.filtrar(lancamentoFilter);
     }
 
     @GetMapping("/{codigo}")

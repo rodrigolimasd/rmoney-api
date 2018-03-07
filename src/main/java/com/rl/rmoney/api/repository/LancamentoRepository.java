@@ -1,6 +1,7 @@
 package com.rl.rmoney.api.repository;
 
 import com.rl.rmoney.api.model.Lancamento;
+import com.rl.rmoney.api.repository.lancamento.LancamentoRepositoryQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +11,6 @@ import org.springframework.stereotype.Repository;
  * @since 07/03/2018
  */
 @Repository
-public interface LancamentoRepository extends JpaRepository<Lancamento, Long> {
+public interface LancamentoRepository extends JpaRepository<Lancamento, Long>, LancamentoRepositoryQuery {
 
 }
