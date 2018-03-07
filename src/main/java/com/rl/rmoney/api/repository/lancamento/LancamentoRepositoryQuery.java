@@ -2,8 +2,9 @@ package com.rl.rmoney.api.repository.lancamento;
 
 import com.rl.rmoney.api.model.Lancamento;
 import com.rl.rmoney.api.repository.filter.LancamentoFilter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 
 /**
  * @author Rodrigo Lima
@@ -12,5 +13,5 @@ import java.util.List;
  */
 public interface LancamentoRepositoryQuery {
 
-    public List<Lancamento> filtrar(LancamentoFilter lancamentoFilter);
+    Page<Lancamento> filtrar(LancamentoFilter lancamentoFilter, Pageable pageable);
 }
