@@ -1,5 +1,7 @@
 package com.rl.rmoney.api.token;
 
+import com.rl.rmoney.api.config.RMoneyApiProperty;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -23,6 +25,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @ControllerAdvice
 public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2AccessToken> {
+
+    @Autowired
+    private RMoneyApiProperty rMoneyApiProperty;
 
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
@@ -51,7 +56,7 @@ public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2Acces
     private void adicionarRefreshTokenNoCookie(String refreshToken, HttpServletRequest req, HttpServletResponse res) {
         Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
         refreshTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setSecure(false); //TODO mudar pra true em produção
+        refreshTokenCookie.setSecure(rMoneyApiProperty.getSeguranca().isEnableHttps());
         refreshTokenCookie.setPath(req.getContextPath()+"/oauth/token");
         refreshTokenCookie.setMaxAge(2592000);
         res.addCookie(refreshTokenCookie);
